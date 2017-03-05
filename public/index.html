@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//cdn.muicss.com/mui-0.9.9-rc2/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.9.9-rc2/js/mui.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      body, html {
+        color: white;
+        height: 100%;
+        font-family: Roboto, sans-serif;
+        font-weight: 300;
+      }
+      .fullheight{
+        min-height: 100%;
+      }
+      .content-wrapper {
+        min-height: 100%;
+
+        /* sticky footer */
+        margin-bottom: -160px;
+        padding-bottom: 200px;
+      }
+      /*.input::-ms-clear {*/
+        /*display: none;*/
+      /*}*/
+      input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+      /**
+       * Footer CSS
+       */
+      .footer {
+        height: 200px;
+        background-color: #607d8b;
+        border-top: 1px solid #e0e0e0;
+        padding-top: 35px;
+        margin-top: 30px;
+      }
+    </style>
+
+    <title>KSAM2.0</title>
+  </head>
+  <body>
+    <div id="root" class="content-wrapper"></div>
+    <div id="footer" class="footer"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
+  </body>
+</html>

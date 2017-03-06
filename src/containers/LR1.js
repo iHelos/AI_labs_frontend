@@ -36,18 +36,18 @@ class MyComponent extends Component {
                 let new_img = new Jimp(width,height, 0xFFFFFFFF, function (err, new_img){
                     let i_max = image.bitmap.width;
                     let j_max = image.bitmap.height;
-                    console.log("NEW_WIDTH:" + width);
-                    console.log("NEW_HEIGHT:" + height);
-                    console.log("k:" + k);
+                    // console.log("NEW_WIDTH:" + width);
+                    // console.log("NEW_HEIGHT:" + height);
+                    // console.log("k:" + k);
                     for(let i=0; i<i_max; i++){
                         for (let j=0; j<j_max; j++){
                             let col = image.getPixelColor(i, j);
-                            console.log(col);
+                           // console.log(col);
                                 let i_delt = i*k;
                                 let j_delt = j*k;
-                                    for(let ind = i_delt; ind < i_delt+k && ind<height-1; ind++) {
-                                        for (let jind = j_delt; jind < j_delt+k && jind<width-1; jind++) {
-                                            console.log("x:" + ind + " y:"+jind + " col:" + col);
+                                    for(let ind = i_delt; ind < i_delt+k; ind++) {
+                                        for (let jind = j_delt; jind < j_delt+k; jind++) {
+                                            //console.log("x:" + ind + " y:"+jind + " col:" + col);
                                             new_img.setPixelColor(col, ind, jind);
                                         }
                                     }

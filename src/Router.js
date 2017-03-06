@@ -6,29 +6,17 @@ import AppBar from 'material-ui/AppBar';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, DefaultRoute, IndexLink } from 'react-router'
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
-import Result from './containers/result/Result'
-import App from './App'
+
 import Home from './containers/Home'
-import Login from './containers/Login'
-import Logout from './containers/Logout'
-import Models from './containers/Models'
 import NotFound from './containers/NotFound'
-import auth from './utils/auth'
 import IconButton from 'material-ui/IconButton';
 import ArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import Grid from "muicss/lib/react/container";
-import Docs from './containers/Documentations'
-import PasswordChange from './containers/PasswordChange'
+
+import LR1 from "./containers/LR1"
+
 class RouterComponent extends React.Component{
-    checkLogin(nextState, replace) {
-    if (!auth.isAuth()) {
-       // replace('/login')
-        replace({
-            pathname: '/login',
-            state: { nextPathname: nextState.location.pathname }
-        })
-    }
-}
+
     render(){
         return (
             <Router history={browserHistory}>
@@ -40,7 +28,7 @@ class RouterComponent extends React.Component{
                     {/*<Route path='/login' component={Login} />*/}
                     {/*<Route path='/docs' component={Docs} />*/}
                     {/*<Route path='/passwordchange' component={PasswordChange} />*/}
-                    <Route path='LR1' component={NotFound} />
+                    <Route path='LR1' component={LR1} />
                     <Route path='*' component={NotFound} />
                 </Route>
             </Router>
@@ -51,25 +39,16 @@ class RouterComponent extends React.Component{
 class Container extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {open: false, openLogout:false};
+        this.state = {open: false};
     }
     handleToggle = () => this.setState({open: !this.state.open});
     handleClose = () => this.setState({open: false});
-    handleOpenLogout = () => this.setState({openLogout:true});
-    handleCancelLogout = () =>  this.setState({openLogout:false});
-    handleConfirmLogout = () => {
-        auth.logout(function(){});
-        this.setState({openLogout:false});
-        this.props.router.replace('/');
-        this.handleClose()
-    };
     render() {
         return (
                 <div>
                     <AppBar
                         title={<Link  activeClassName='active'  style={{color:'white', textDecoration: 'none'}} to='/'>КСАМ 2.0</Link>}
                         onLeftIconButtonTouchTap={this.handleToggle}
-                        iconElementRight={<div>{auth.isAuth() ? auth.getLogin() : 'Гость'}</div>}
                         iconStyleRight={{color: 'white', fontSize: 18, margin: 'auto 0'}}
                         style={{paddingHorizontal:15}}
                     />
@@ -86,53 +65,65 @@ class Container extends React.Component {
                             onClick={this.handleClose}
                         />
 
-                        {auth.isAuth() ?
-                                <div>
-                                    <MenuItem
-                                        onTouchTap={this.handleClose}
-                                        containerElement={<Link  activeClassName='active' to='/models'/>}
-                                    >
-                                        Модели
-                                    </MenuItem>
-                                    <MenuItem
-                                        onTouchTap={this.handleClose}
-                                        containerElement={<Link  activeClassName='active' to='/result'/>}
-                                    >
-                                        Результаты вычислений
-                                    </MenuItem>
 
-                                    <MenuItem
-                                        onTouchTap={this.handleClose}
-                                        containerElement={<Link  activeClassName='active' to='/passwordchange'/>}
-                                        >
-                                        Сменить пароль
-                                    </MenuItem>
-                                    <MenuItem
-                                        onTouchTap={this.handleOpenLogout}
-                                    >
-                                        Выйти
-                                    </MenuItem>
-                                </div>
-                                :<MenuItem
-                                    onTouchTap={this.handleClose}
-                                    containerElement={<Link  activeClassName='active' to='/login'/>}
-                                    >
-                                    Войти
-                                </MenuItem>
-
-                        }
                         <MenuItem
                             onTouchTap={this.handleClose}
-                            containerElement={<Link  activeClassName='active' to='/docs'/>}
+                            containerElement={<Link  activeClassName='active' to='/LR1'/>}
                         >
-                            Документация
+                            ЛР1 (NN-1: Персептрон)
                         </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR2'/>}
+                        >
+                            ЛР2
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR3'/>}
+                        >
+                            ЛР3
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR4'/>}
+                        >
+                            ЛР4
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='disabled' to='/LR5'/>}
+                        >
+                            ЛР5
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR6'/>}
+                        >
+                            ЛР6
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR7'/>}
+                        >
+                            ЛР7
+                        </MenuItem>
+                        <MenuItem
+                            disabled = {true}
+                            onTouchTap={this.handleClose}
+                            containerElement={<Link  activeClassName='active' to='/LR8'/>}
+                        >
+                            ЛР8
+                        </MenuItem>
+
                     </Drawer>
-                    <Logout
-                        openModal={this.state.openLogout}
-                        onConfirm={this.handleConfirmLogout}
-                        onCancel={this.handleCancelLogout}
-                    />
+
                     <Grid style={{paddingTop:20}}>
                         {this.props.children}
                     </Grid>

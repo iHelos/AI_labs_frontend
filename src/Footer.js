@@ -14,18 +14,16 @@ export default class Footer extends React.Component {
                 <Grid>
                     <Row>
                         <Col xs="12" md="12" lg="6" xl="6">
-                            <div className="mui--text-headline">КСАМ</div>
-                            <div className="mui--text-body1">Комплекс инструментальных средств анализа моделей доступа к базам данных</div>
+                            <div className="mui--text-headline">Лабораторные работы по курсу:</div>
+                            <div className="mui--text-body1">Проектирование интеллектуальных систем</div>
+                            <a href="https://github.com/iHelos/AI_labs_frontend" style={{color:'#bcaaa4', textDecoration: 'none'}}>Фронтенд</a>
                         </Col>
                         <Col xs="12" md="12" lg="6" xl="6">
                             <div className="mui--text-headline">Разработали</div>
                             <Col style={{flexDirection:'row'}}>
-                                <a style={{ color:'white', textDecoration: 'none'}}>Концепция: </a>
-                                <a style={{color:'#bcaaa4', textDecoration: 'none'}}>д.т.н, проф. Григорьев Ю.А.</a>
-                            </Col>
-                            <Col style={{flexDirection:'row'}}>
-                                <a style={{ color:'white', textDecoration: 'none'}}>Математическая модель: </a>
-                                <a style={{color:'#bcaaa4', textDecoration: 'none'}}>к.т.н. Ермаков Е.Ю.</a>
+                                <a style={{ color:'white', textDecoration: 'none'}}>Преподаватель: </a>
+                                <a style={{color:'#bcaaa4', textDecoration: 'none'}}>Декан Факультета информатики и систем управления, к.т.н., доцент.</a>
+                                <a style={{color:'#bcaaa4', textDecoration: 'none'}}><br/>Филиппович А.Ю.</a>
                             </Col>
                             <Col style={{flexDirection:'row'}}>
                                 <a style={{ color:'white', textDecoration: 'none'}}>Веб-приложение: </a>

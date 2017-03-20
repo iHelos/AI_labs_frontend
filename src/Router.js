@@ -47,7 +47,7 @@ class Container extends React.Component {
         return (
                 <div>
                     <AppBar
-                        title={<Link  activeClassName='active'  style={{color:'white', textDecoration: 'none'}} to='/'>КСАМ 2.0</Link>}
+                        title={<Link  activeClassName='active'  style={{color:'white', textDecoration: 'none'}} to='/'>Проектирование ИС</Link>}
                         onLeftIconButtonTouchTap={this.handleToggle}
                         iconStyleRight={{color: 'white', fontSize: 18, margin: 'auto 0'}}
                         style={{paddingHorizontal:15}}
@@ -59,7 +59,7 @@ class Container extends React.Component {
                         onRequestChange={(open) => this.setState({open})}
                     >
                         <AppBar
-                            title='КСАМ 2.0'
+                            title='Проектирование ИС'
                             iconElementLeft={<IconButton><ArrowLeft /></IconButton>}
                             style={{cursor: 'pointer'}}
                             onClick={this.handleClose}

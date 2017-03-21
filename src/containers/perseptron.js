@@ -27,7 +27,7 @@ class Neuron {
     }
     calculate(x) {
         let sum = 0;
-        console.log(this.weights);
+        //console.log(this.weights);
         this.weights.forEach((value, index) => {
             sum += value * x[index];
         });
@@ -44,9 +44,9 @@ class Neuron {
             array[index] += delta_w;
         });
     }
-    print() {
-        console.log(this.weights)
-    }
+    //print() {
+    //    console.log(this.weights)
+    //}
 }
 class Perseptron {
     constructor(size) {
@@ -89,9 +89,9 @@ class Perseptron {
     calculate(){
         this.activate()
     }
-    print() {
-        this.network.forEach((value)=>{value.print()})
-    }
+    //print() {
+    //    this.network.forEach((value)=>{value.print()})
+    //}
 }
 
 export default Perseptron

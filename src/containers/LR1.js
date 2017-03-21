@@ -26,6 +26,8 @@ let parseInput = function(input) {
     }
     //console.log(y_train);
     //console.log(x_train);
+    x_train = x_train.splice(0,100000);
+    //console.log(x_train);
     let predictSize = x_train.length * 0.1;
    // let predictSize = 100;
     let x_predict  = x_train.splice(0,predictSize);
@@ -36,7 +38,9 @@ let parseInput = function(input) {
     let pers = new Perseptron(x_train[0].length);
     pers.fit(x_train, y_train, 10, 0.01);
     let predictionValues = pers.predict(x_predict);
-    console.log(predictionValues)
+    y_predict_short.forEach((value,index) => {if (value == predictionValues[index]) console.log('win')});
+    //console.log(y_predict_short);
+    //console.log(predictionValues)
 
 };
 class MyComponent extends Component {
@@ -60,7 +64,7 @@ class MyComponent extends Component {
                 //worker: true,
                 //fastmode:true,
                 complete: function(results) {
-                    console.log("Parsing complete:", results);
+                    console.log("Parsing complete:");
                     parseInput(results.data);
                 },
                 // step: function(results, parser) {

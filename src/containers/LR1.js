@@ -1,48 +1,8 @@
 import React, { Component } from 'react';
-const Dropzone = require('react-dropzone');
-const Papa = require('papaparse');
-import Perseptron from './perseptron'
+var Dropzone = require('react-dropzone');
 // import imageToAscii from 'image-to-ascii'
 
-//var Jimp = window.Jimp;
-let parseInput = function(input) {
-    input.splice(0,1); //remove header
-
-    let x_train = [];
-    let y_train = [];
-    let y_train_short = [];
-    for (let el of input) {
-        let y_elem = new Array(10);
-        y_elem.fill(0);
-        let ind = el.splice(0,1)[0];
-        y_train_short.push(ind);
-        y_elem[ind] = 1;
-        y_train.push(y_elem);
-        let x_format = [];
-        for (let x of el) {
-            x_format.push(x /= 255);
-        }
-        x_train.push(x_format);
-    }
-    //console.log(y_train);
-    //console.log(x_train);
-    x_train = x_train.splice(0,100000);
-    //console.log(x_train);
-    let predictSize = x_train.length * 0.1;
-   // let predictSize = 100;
-    let x_predict  = x_train.splice(0,predictSize);
-    let y_predict = y_train.splice(0,predictSize);
-    let y_predict_short =  y_train_short.splice(0,predictSize);
-    //console.log(y_predict_short);
-    //console.log(x_train)
-    let pers = new Perseptron(x_train[0].length);
-    pers.fit(x_train, y_train, 10, 0.01);
-    let predictionValues = pers.predict(x_predict);
-    y_predict_short.forEach((value,index) => {if (value == predictionValues[index]) console.log('win')});
-    //console.log(y_predict_short);
-    //console.log(predictionValues)
-
-};
+var Jimp = window.Jimp;
 class MyComponent extends Component {
     constructor() {
         super();
@@ -52,35 +12,54 @@ class MyComponent extends Component {
         }
     }
     onChange = (pictures) => this.setState({ pictures });
+// The path can be either a local path or an url
 
-    onDrop = function (acceptedFiles) {
+    onDrop= function (acceptedFiles) {
         var new_files = [];
         for (var file of acceptedFiles){
-            console.log("Started parsing:", file);
+            let img = file.preview;
+            Jimp.read(img, function (err, image) {
+                let w = image.bitmap.width; // the width of the image
+                let h = image.bitmap.height; // the height of the image
 
-            Papa.parse(file, {
-                download: false,
-                dynamicTyping: true,
-                //worker: true,
-                //fastmode:true,
-                complete: function(results) {
-                    console.log("Parsing complete:");
-                    parseInput(results.data);
-                },
-                // step: function(results, parser) {
-                //    // console.log("Row data:", results.data);
-                //    // console.log("Row errors:", results.errors);
-                //     let data = results.data;
-                //     y_train.push(data.splice(1,1));
-                //     x_train.push(data);
-                // },
-                error: function(err, file){
-                    console.log("Parsing err:", err);
+                let width = image.bitmap.width; // the height of the image
+                let height = image.bitmap.height; // the height of the image
+
+                let k = 1;
+                for(let i = 1; height<250; i++){
+                    height=h*i;
+                    width=w*i;
+                    k = i;
                 }
 
-            });
+                let new_img = new Jimp(width,height, 0xFFFFFFFF, function (err, new_img){
+                    let i_max = image.bitmap.width;
+                    let j_max = image.bitmap.height;
+                    // console.log("NEW_WIDTH:" + width);
+                    // console.log("NEW_HEIGHT:" + height);
+                    // console.log("k:" + k);
+                    for(let i=0; i<i_max; i++){
+                        for (let j=0; j<j_max; j++){
+                            let col = image.getPixelColor(i, j);
+                           // console.log(col);
+                                let i_delt = i*k;
+                                let j_delt = j*k;
+                                    for(let ind = i_delt; ind < i_delt+k; ind++) {
+                                        for (let jind = j_delt; jind < j_delt+k; jind++) {
+                                            //console.log("x:" + ind + " y:"+jind + " col:" + col);
+                                            new_img.setPixelColor(col, ind, jind);
+                                        }
+                                    }
 
-
+                            }
+                        }
+                    new_img.getBase64( Jimp.MIME_PNG, (err, data) =>{
+                        let arr = this.state.showpictures;
+                        arr.push(data);
+                        this.setState({showpictures:arr})
+                    });
+                }.bind(this));
+            }.bind(this));
         }
 
         this.setState({
@@ -90,11 +69,17 @@ class MyComponent extends Component {
 
 
     render() {
-
         var pictures = this.state.pictures;
+        for (var pic of pictures) {
+            window.Jimp.read(pic.preview, function (err, image) {
+                console.log(image);
+                console.log(image.getPixelColor(0, 0));
+                console.log(image.getPixelColor(1, 1));
+            });
+        }
         return (
             <div>
-                <Dropzone onDrop={this.onDrop}>
+                <Dropzone onDrop={this.onDrop.bind(this)}>
                     <div>Try dropping some files here, or click to select files to upload.</div>
                 </Dropzone>
                 {this.state.pictures.length > 0 ? <div>
